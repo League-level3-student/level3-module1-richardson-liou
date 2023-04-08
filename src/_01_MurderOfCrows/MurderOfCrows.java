@@ -21,7 +21,7 @@ public class MurderOfCrows {
     		for(int k = 0; k<theMurder.size(); k++) {
     			if(theMurder.get(i).getStomachContents().contains("diamond")) {
     				System.out.println(theMurder.get(i).getName());
-    				System.out.println((theMurder.size()-i) + " died before diamond was found.");
+    				System.out.println((i) + " died before diamond was found.");
     			}
     			
     		}

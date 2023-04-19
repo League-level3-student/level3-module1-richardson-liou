@@ -1,5 +1,7 @@
 package _05_Retro_Sun;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 /*
@@ -12,6 +14,19 @@ public class RetroSun extends PApplet {
 
 	final int WIDTH = 800;
     final int HEIGHT = 600;
+    
+    // To draw each rectangle we need to find its x, y, width, height
+    // *The y position can be any value within the sun:
+    float y = 800 / 2;
+    // *The height can be any value you choose:
+    float h = 30;
+    // *The x position can be the center of the sun's x position minus the radius:
+    float x = 400- 200;
+    // *The width can be 2 times the radius
+    float w = 2 * 200;
+
+    
+    ArrayList<Rectangle> sections = new ArrayList<Rectangle>();
     // RGB colors
     int[] sunColors = {
             color(212, 202, 11), color(214, 198, 30), color(211, 170, 26),
@@ -31,6 +46,9 @@ public class RetroSun extends PApplet {
     public void setup() {
         // 2. Set bgColor as the background color
     	background(31,0,48);
+    	for(int i = 0; i<5; i++) {
+        	sections.add(new Rectangle(x,y+=100,w,h));
+    	}
     }
 
     @Override
@@ -101,16 +119,7 @@ public class RetroSun extends PApplet {
 
         // Set the fill color to the background color
     	fill(bgColor);
-        // To draw each rectangle we need to find its x, y, width, height
-        // *The y position can be any value within the sun:
-        float y = width / 2;
-        // *The height can be any value you choose:
-        float h = 30;
-        // *The x position can be the center of the sun's x position minus the radius:
-        float x = 400- 200;
-        // *The width can be 2 times the radius
-        float w = 2 * 200;
-        rect(x,y,w,h);
+        //rect(x,y,w,h);
         noStroke();
         // Do you see a section missing from the sun like in the 3rd image?
 
@@ -125,24 +134,35 @@ public class RetroSun extends PApplet {
         // Decrease the y variable of the rectangular section created in PART 3.
         // If there isn't a variable, declare a float variable OUTSIDE of the
         // draw function AND initialize it in the setup() function.
-        for(int i = 0; i<20; i++) {
-        	
-        	rect(x,y,w,h);
-        	noStroke();
-        	y-=10;
-        }
+        
+        
+        	for (int k = 0; k<sections.size(); k++) {
+        		Rectangle rect = sections.get(k);
+        		
+        		rect.h = map(rect.y, 250, 500, 1, 40);
+        		rect(rect.x,rect.y-=.5,rect.w,rect.h);
+        		
+            	noStroke();
+        	}
+     
         // Do you see the rectangle moving upwards?
 
         // Pick a y positon to be the location when the sections stop moving up.
         // If the rectangle's y positon is above this, move the rectangle's
         // y position back to the bottom of the sun.
-
+        int maxY = 250;
+        for (int k = 0; k<sections.size(); k++) {
+    		Rectangle rect = sections.get(k);
+    		if (rect.y <maxY) {
+    			rect.y = 500;
+    		}
+    	}
         // Does the rectangle move back to the bottom?
 
         // Decrease the the height of the rectangle as it moves upwards.
         // Similar to the y positon, a float variable for the height needs to be
         // created if it doesn't already exist.
-
+        
         // Adjust the amount to decrease so that it disappears close to the top.
         // HINT: You can use the map() function again,
         // h = map(y, missingSectionTopY, missingSectionBottomY, 1, 40);
@@ -170,8 +190,8 @@ public class RetroSun extends PApplet {
          * reflections and stars. See RetroSun.html in this folder for some
          * example classes
          */
-    }
-
+    
+}
     static public void main(String[] passedArgs) {
         PApplet.main(RetroSun.class.getName());
     }
@@ -197,7 +217,7 @@ public class RetroSun extends PApplet {
 
     // Feel free to use this class to create a list of missing
     // sections in the sun, for example:
-    // ArrayList<Rectangle> sections = new ArrayList<Rectangle>();
+ 
     class Rectangle {
         float x, y, w, h;
 

@@ -1,9 +1,18 @@
 package _06_Intro_To_Hash_Maps;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
-public class _02_LogSearch {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class _02_LogSearch implements ActionListener {
     /*
      * Crate a HashMap of Integers for the keys and Strings for the values.
+     
      * Create a GUI with three buttons.
      * Button 1: Add Entry
      *      When this button is clicked, use an input dialog to ask the user
@@ -33,5 +42,57 @@ public class _02_LogSearch {
      *      If this ID exists in the HashMap, remove it. Otherwise, notify the
      *      user that the ID is not in the list.
      */
+	HashMap<Integer, String> logs = new HashMap <Integer, String>();
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton button1 = new JButton();
+	JButton button2 = new JButton();
+	JButton button3 = new JButton();
+	public void setup() {
+		frame.add(panel);
+		panel.add(button1);
+		panel.add(button2);
+		panel.add(button3);
+		frame.setSize(300, 300);
+		frame.setVisible(true);
+		frame.pack();
+		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+	}
+	
 
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	
+	if(e.getSource() == button1) {
+		String value = JOptionPane.showInputDialog("Enter an ID number: ");
+		int userID = Integer.parseInt(value);
+		String name = JOptionPane.showInputDialog("What is your name: ");
+		logs.put(userID, name);
+		
+	}
+	if(e.getSource() == button2) {
+		String searchID = JOptionPane.showInputDialog("Enter ID to search for: " );
+		int findID = Integer.parseInt(searchID);
+		for (Integer i : logs.keySet()) {
+			
+			if (i == findID) {
+				JOptionPane.showMessageDialog(null, logs.get(i));
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "ID not found");
+		
+	}
+	
+	if(e.getSource() == button3) {
+		JOptionPane.showMessageDialog(null, logs);
+	}
+}
+
+
+
+	
 }

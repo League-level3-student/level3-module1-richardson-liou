@@ -3,6 +3,7 @@ package _06_Intro_To_Hash_Maps;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,26 +46,30 @@ public class _02_LogSearch implements ActionListener {
 	HashMap<Integer, String> logs = new HashMap <Integer, String>();
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
-	JButton button1 = new JButton();
-	JButton button2 = new JButton();
-	JButton button3 = new JButton();
+	JButton button1 = new JButton("Add Item");
+	JButton button2 = new JButton("Find Item");
+	JButton button3 = new JButton("Show all Items");
+	JButton button4 = new JButton("Remove Item");
 	public void setup() {
 		frame.add(panel);
 		panel.add(button1);
 		panel.add(button2);
 		panel.add(button3);
+		panel.add(button4);
 		frame.setSize(300, 300);
 		frame.setVisible(true);
 		frame.pack();
 		button1.addActionListener(this);
 		button2.addActionListener(this);
 		button3.addActionListener(this);
+		button4.addActionListener(this);
 	}
 	
 
 
 @Override
 public void actionPerformed(ActionEvent e) {
+	Boolean idFound = false;
 	
 	if(e.getSource() == button1) {
 		String value = JOptionPane.showInputDialog("Enter an ID number: ");
@@ -80,15 +85,50 @@ public void actionPerformed(ActionEvent e) {
 			
 			if (i == findID) {
 				JOptionPane.showMessageDialog(null, logs.get(i));
+				idFound = true;
 			}
+			
+
+			
+		}
+		if (idFound == false) {
+
+			JOptionPane.showMessageDialog(null, "ID not found");
 		}
 		
-		JOptionPane.showMessageDialog(null, "ID not found");
 		
 	}
 	
 	if(e.getSource() == button3) {
-		JOptionPane.showMessageDialog(null, logs);
+		String allItems = "";
+		for(int i : logs.keySet()) {
+		
+				allItems += "ID: " + i + " Name: " + logs.get(i) + "\n"; 
+		
+			
+		}
+		JOptionPane.showMessageDialog(null, allItems);
+		
+	}
+	
+	if(e.getSource() == button4) {
+		String item = JOptionPane.showInputDialog("Enter ID you would like to remove: " );
+		int removeID = Integer.parseInt(item);
+		for (Integer i : logs.keySet()) {
+			
+			if (i == removeID) {
+				logs.remove(i);
+				JOptionPane.showMessageDialog(null, "Removed " +i  );
+				idFound = true;
+			}
+			
+
+			
+		}
+		if (idFound == false) {
+
+			JOptionPane.showMessageDialog(null, "ID not found");
+		}
 	}
 }
 

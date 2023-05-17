@@ -1,6 +1,8 @@
 package _07_Meeting_Scheduler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MeetingScheduler {
     /*
@@ -24,13 +26,29 @@ public class MeetingScheduler {
      * Assume both schedules are in the same time zones
      */
 	
-	Schedule available;
+
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
-        for(int i = 0; i< person1.getSchedule().size(); i++) {
-        	for(int k = 0; k<person2.getSchedule().size(); i++) {
-        		
+    	Schedule available = new Schedule();
+    	ArrayList<Integer> availableTimes = new ArrayList<Integer>();
+        for(String i : person1.getSchedule().keySet()) {        	
+        		if(person2.getSchedule().containsKey(i)) {
+        			String avDay = i;
+        			System.out.println(i);
+        			ArrayList<Integer> p2av = person2.getSchedule().get(i);
+        			ArrayList<Integer> p1av = person1.getSchedule().get(i);
+        			for(int k = 0; k< p2av.size(); k ++) {
+        				int p2time= p2av.get(k);
+        				int p1time = p1av.get(k);
+        				
+        				if(p1time == p2time) {
+        					availableTimes.add(p2time);
+        					available.addAvailability(i, p1time);
+        					available.getSchedule().put(i, availableTimes);
+        				}
+        			}
+        		}
         	}
-        }
-        return null;
+        
+        return available;
     }
 }

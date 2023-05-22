@@ -2,6 +2,11 @@ package _08_California_Weather;
 
 import java.util.HashMap;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /*
  * OBJECTIVE:
  * 1. Create a program that allows the user to search for the weather
@@ -28,18 +33,35 @@ import java.util.HashMap;
  */
 
 public class CaliforniaWeather {
-    
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton button1 = new JButton("Find Weather of City");
+	JButton button2 = new JButton("Find city with weather condition");
+	JButton button3 = new JButton("Find city with Min: __ and Max:__ temp in F");
     void start() {
+    	
         HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+        String inputCity = JOptionPane.showInputDialog("What city's weather would you like to search for?");
         
         // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
+        String cityName = Utilities.capitalizeWords( inputCity);
         WeatherData datum = weatherData.get(cityName);
         
         if( datum == null ) {
             System.out.println("Unable to find weather data for: " + cityName);
         } else {
             System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
+        }
+        
+        
+        String inputWeather = JOptionPane.showInputDialog("What weather condition would you like to search for? ");
+        for(String i : weatherData.keySet()) {
+        	WeatherData weatherF = weatherData.get(i);
+        	System.out.println(weatherF);
+        	if (weatherF.equals(inputWeather)) {
+        		System.out.println(i);
+        	}
+        	
         }
     }
 }

@@ -28,27 +28,26 @@ public class MeetingScheduler {
 	
 
     public static Schedule getMutualAvailability(Schedule person1, Schedule person2) {
-    	Schedule available = new Schedule();
-    	ArrayList<Integer> availableTimes = new ArrayList<Integer>();
+    	Schedule availability = new Schedule();
         for(String i : person1.getSchedule().keySet()) {        	
         		if(person2.getSchedule().containsKey(i)) {
-        			String avDay = i;
+        			String availableDay = i;
         			System.out.println(i);
         			ArrayList<Integer> p2av = person2.getSchedule().get(i);
         			ArrayList<Integer> p1av = person1.getSchedule().get(i);
         			for(int k = 0; k< p2av.size(); k ++) {
+        				for(int y = 0; y <p1av.size(); y++) {
         				int p2time= p2av.get(k);
-        				int p1time = p1av.get(k);
-        				
+        				int p1time = p1av.get(y);
         				if(p1time == p2time) {
-        					availableTimes.add(p2time);
-        					available.addAvailability(i, p1time);
-        					available.getSchedule().put(i, availableTimes);
+        					availability.addAvailability(i, p1time);
+        					System.out.println(i + " is available day. " + p1time + "is an available time");
         				}
+        			}
         			}
         		}
         	}
-        
-        return available;
+        System.out.println(availability);
+        return availability;
     }
 }
